@@ -10,7 +10,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
+int displayBanner();
 int getIntNumbers(int* pNum1, int* pNum2);
 int showOperations(int* pOperationNumber, int* pNum1, int* pNum2);
 int executeOperationChoosed(int* operationNumber, int num1, int num2, int* resultado, int* factNum1, int* factNum2);
@@ -23,11 +25,33 @@ int main(void) {
 	int factNum1;
 	int factNum2;
 
+	displayBanner();
 	getIntNumbers(&num1,&num2);
+	clearScreen();
+	displayBanner();
 	showOperations(&operationNumber,&num1,&num2);
 	executeOperationChoosed(&operationNumber, num1, num2, &resultado, &factNum1, &factNum2);
 
 	return EXIT_SUCCESS;
+}
+
+void clearScreen()
+{
+  const char *CLEAR_SCREEN_ANSI = "\e[1;1H\e[2J";
+  write(STDOUT_FILENO, CLEAR_SCREEN_ANSI, 12);
+}
+
+int displayBanner()
+{
+printf("	 _               _                  _            _       _    ___       \n");
+printf("	| |             (_)                | |          | |     | |  / _ \      \n");
+printf("	| |__   __ _ ___ _  ___    ___ __ _| | ___ _   _| | __ _| |_| | | |_ __ \n");
+printf("	| '_ \ / _` / __| |/ __|  / __/ _` | |/ __| | | | |/ _` | __| | | | '__|\n");
+printf("	| |_) | (_| \__ \ | (__  | (_| (_| | | (__| |_| | | (_| | |_| |_| | |   \n");
+printf("	|_.__/ \__,_|___/_|\___|  \___\__,_|_|\___|\__,_|_|\__,_|\__|\___/|_|   \n");
+printf("	                                                                        \n");
+printf("	                                                                        \n");
+	return 0;
 }
 
 int getIntNumbers(int* pNum1, int* pNum2)
@@ -57,7 +81,7 @@ int showOperations(int* pOperationNumber, int* pNum1, int* pNum2)
 			"\n		3. Multiplicacion (%d*%d)"
 			"\n		4. Division (%d/%d)"
 			"\n		5. Factoriales (%d! - %d!)"
-			"\n\nOpcion: ",num1,num2,num1,num2,num1,num2,num1,num2,num1,num2);
+			"\n\n	Opcion: ",num1,num2,num1,num2,num1,num2,num1,num2,num1,num2);
 	scanf("%d", &operationNumber);
 
 	if(operationNumber >= 1 && operationNumber <= 5)
@@ -130,10 +154,14 @@ int executeOperationChoosed(int* poperationNumber, int num1, int num2, int* resu
 	}
 	if(operationNumber == 4)
 	{
-		intDiv(resultado,num1,num2);
-		printf("El resultado de la division entre %d / %d es: %d",num1,num2,*resultado);
-	} else if (num1 == 0 || num2 == 0) {
-		printf("No se puede dividir por 0");
+		if(num1 == 0 || num2 == 0)
+		{
+			printf("No se puede dividir por 0");
+		} else
+		{
+			intDiv(resultado,num1,num2);
+			printf("El resultado de la division entre %d / %d es: %d",num1,num2,*resultado);
+		}
 	}
 	if(operationNumber == 5)
 	{
