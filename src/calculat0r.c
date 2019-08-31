@@ -10,8 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "stuff.c"
-#include "math.c"
+#include "global.h"
 
 int main(void)
 {

@@ -4,9 +4,7 @@
  *  Created on: Aug 31, 2019
  *      Author: root
  */
-
 #include <unistd.h>
-
 void stuff_clearScreen()
 {
   const char *CLEAR_SCREEN_ANSI = "\e[1;1H\e[2J";
