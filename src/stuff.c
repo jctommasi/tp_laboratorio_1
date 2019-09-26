@@ -1,10 +1,12 @@
 /*
  * stuff.c
  *
- *  Created on: Aug 31, 2019
- *      Author: root
+ *  Created on: 18 sep. 2019
+ *      Author: alumno
  */
-#include <unistd.h>
+
+#include "stuff.h"
+
 void stuff_clearScreen()
 {
   const char *CLEAR_SCREEN_ANSI = "\e[1;1H\e[2J";
@@ -14,18 +16,25 @@ void stuff_clearScreen()
 void stuff_displayBanner()
 {
 	printf("\033[0;32m");
-	printf("	                                                                                   \n");
-	printf("	 ██████╗ █████╗ ██╗      ██████╗██╗   ██╗██╗      █████╗ ████████╗ ██████╗ ██████╗ \n");
-	printf("	██╔════╝██╔══██╗██║     ██╔════╝██║   ██║██║     ██╔══██╗╚══██╔══╝██╔═████╗██╔══██╗\n");
-	printf("	██║     ███████║██║     ██║     ██║   ██║██║     ███████║   ██║   ██║██╔██║██████╔╝\n");
-	printf("	██║     ██╔══██║██║     ██║     ██║   ██║██║     ██╔══██║   ██║   ████╔╝██║██╔══██╗\n");
-	printf("	╚██████╗██║  ██║███████╗╚██████╗╚██████╔╝███████╗██║  ██║   ██║   ╚██████╔╝██║  ██║\n");
-	printf("	 ╚═════╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝\n");
-	printf("	                                                                                   \n");
+	printf("██╗   ██╗███████╗███████╗██████╗ ███████╗    ███████╗██╗   ██╗███████╗\n");
+	printf("██║   ██║██╔════╝██╔════╝██╔══██╗██╔════╝    ██╔════╝╚██╗ ██╔╝██╔════╝\n");
+	printf("██║   ██║███████╗█████╗  ██████╔╝███████╗    ███████╗ ╚████╔╝ ███████╗\n");
+	printf("██║   ██║╚════██║██╔══╝  ██╔══██╗╚════██║    ╚════██║  ╚██╔╝  ╚════██║\n");
+	printf("╚██████╔╝███████║███████╗██║  ██║███████║    ███████║   ██║   ███████║\n");
+	printf(" ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═╝╚══════╝    ╚══════╝   ╚═╝   ╚══════╝\n");
+	printf("\033[0m");
+
+}
+
+void stuff_showMenu()
+{
 	printf("\033[0;31m");
-	printf("TRABAJO PRACTICO N1 - UTN - PROGRAMACION I \n\n"
-			"AUTHOR:		juan cruz tommasi \n"
-			"DATE:		31 aug 2019\n"
-			"DESC:		very basic calculat0r \n\n");
+	printf("Que operacion desea realizar?\n"
+			"\n		1. Alta"
+			"\n		2. Baja"
+			"\n		3. Modificar"
+			"\n		4. Listar"
+			"\n		5. Ordenar"
+			"\n		6. Salir\n\n");
 	printf("\033[0m");
 }
