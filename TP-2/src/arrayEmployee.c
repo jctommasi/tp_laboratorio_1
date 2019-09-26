@@ -1,6 +1,6 @@
-#include "db_model_func.h"
+#include "arrayEmployee.h"
 
-int model_clear_all(Model array[], int size)
+int employee_clear_all(Employee array[], int size)
 {
     int retorno=-1;
     if(array != NULL && size>0)
@@ -14,7 +14,7 @@ int model_clear_all(Model array[], int size)
     return retorno;
 }
 
-int model_findEmpty(Model array[], int size, int* posicion)
+int employee_findEmpty(Employee array[], int size, int* posicion)
 {
     int retorno=-1;
     int i;
@@ -33,7 +33,7 @@ int model_findEmpty(Model array[], int size, int* posicion)
     return retorno;
 }
 
-int model_findId(Model array[], int size, int valorBuscado, int* posicion)
+int employee_findId(Employee array[], int size, int valorBuscado, int* posicion)
 {
     int retorno=-1;
     int i;
@@ -54,7 +54,7 @@ int model_findId(Model array[], int size, int valorBuscado, int* posicion)
     return retorno;
 }
 
-int model_searchInt(Model array[], int size, int valorBuscado, int* posicion)
+int employee_searchInt(Employee array[], int size, int valorBuscado, int* posicion)
 {
     int retorno=-1;
     int i;
@@ -64,7 +64,7 @@ int model_searchInt(Model array[], int size, int valorBuscado, int* posicion)
         {
             if(array[i].isEmpty==1)
                 continue;
-            else if(array[i].age==valorBuscado)
+            else if(array[i].sector==valorBuscado)
             {
                 retorno=0;
                 *posicion=i;
@@ -75,7 +75,7 @@ int model_searchInt(Model array[], int size, int valorBuscado, int* posicion)
     return retorno;
 }
 
-int model_searchString(Model array[], int size, char* valorBuscado, int* indice)
+int employee_searchString(Employee array[], int size, char* valorBuscado, int* indice)
 {
     int retorno=-1;
     int i;
@@ -85,7 +85,7 @@ int model_searchString(Model array[], int size, char* valorBuscado, int* indice)
         {
             if(array[i].isEmpty==1)
                 continue;
-            else if(strcmp(array[i].surname,valorBuscado)==0)
+            else if(strcmp(array[i].lastName,valorBuscado)==0)
             {
                 *indice=i;
                 retorno=0;
@@ -96,13 +96,13 @@ int model_searchString(Model array[], int size, char* valorBuscado, int* indice)
     return retorno;
 }
 
-int model_signup(Model array[], int size, int* contadorID)
+int employee_signup(Employee array[], int size, int* contadorID)
 {
     int retorno=-1;
     int posicion;
     if(array!=NULL && size>0 && contadorID!=NULL)
     {
-        if(model_findEmpty(array,size,&posicion)==-1)
+        if(employee_findEmpty(array,size,&posicion)==-1)
         {
             printf("\nNo hay lugares vacios");
         }
@@ -111,19 +111,19 @@ int model_signup(Model array[], int size, int* contadorID)
             (*contadorID)++;
             array[posicion].idUnico=*contadorID;
             array[posicion].isEmpty=0;
-            utn_getUnsignedInt("\nEdad: ","\nError",1,sizeof(int),1,size,1,&array[posicion].age);
-            utn_getName("\nApellido: ","\nError",1,TEXT_SIZE,1,array[posicion].surname);
-            utn_getTexto("\nNombre completo: ","\nError",1,TEXT_SIZE,1,array[posicion].fullname);
-            //utn_getFloat("\nPago a realizar: ","\nError",1,sizeof(float),0,1,1,&array[posicion].payments);
+            utn_getUnsignedInt("\nSector: ",MSG_DEFAULT_ERROR,1,sizeof(int),1,size,1,&array[posicion].sector);
+            utn_getName("\nApellido: ",MSG_DEFAULT_ERROR,1,TEXT_SIZE,1,array[posicion].lastName);
+            utn_getTexto("\nNombre: ",MSG_DEFAULT_ERROR,1,TEXT_SIZE,1,array[posicion].name);
+            utn_getFloat("\nSalario: ",MSG_DEFAULT_ERROR,1,sizeof(float),0,1,1,&array[posicion].salary);
             printf("\n Posicion: %d\n ID: %d\n Apellido: %s\n Nombre Completo: %s\n Edad: %d",
-                   posicion, array[posicion].idUnico,array[posicion].surname,array[posicion].fullname,array[posicion].age);
+                   posicion, array[posicion].idUnico,array[posicion].lastName,array[posicion].name,array[posicion].sector);
             retorno=0;
         }
     }
     return retorno;
 }
 
-int model_destroy(Model array[], int sizeArray)
+int employee_destroy(Employee array[], int sizeArray)
 {
     int retorno=-1;
     int posicion;
@@ -133,7 +133,7 @@ int model_destroy(Model array[], int sizeArray)
     {
         utn_getUnsignedInt("\nID a cancelar: ","\nError",1,sizeof(int),1,sizeArray,1,&id);
 
-        if(model_findId(array,sizeArray,id,&posicion)==-1)
+        if(employee_findId(array,sizeArray,id,&posicion)==-1)
         {
             printf("\nNo existe este ID");
         }
@@ -141,10 +141,10 @@ int model_destroy(Model array[], int sizeArray)
         {
             array[posicion].isEmpty=1;
             array[posicion].idUnico=0;
-            array[posicion].age=0;
-            array[posicion].payments=0;
-            strcpy(array[posicion].surname,"");
-            strcpy(array[posicion].fullname,"");
+            array[posicion].sector=0;
+            array[posicion].salary=0;
+            strcpy(array[posicion].lastName,"");
+            strcpy(array[posicion].name,"");
             retorno=0;
             printf("\nEl usuario ha sido eliminado exitosamente.\n");
         }
@@ -152,7 +152,7 @@ int model_destroy(Model array[], int sizeArray)
     return retorno;
 }
 
-int model_destroyMatchedInt(Model array[], int sizeArray, int valorBuscado)
+int employee_destroyMatchedInt(Employee array[], int sizeArray, int valorBuscado)
 {
     int retorno=-1;
     int i;
@@ -164,10 +164,10 @@ int model_destroyMatchedInt(Model array[], int sizeArray, int valorBuscado)
             {
                 array[i].isEmpty=1;
                 array[i].idUnico=0;
-                array[i].age=0;
-                array[i].payments=0;
-                strcpy(array[i].surname,"");
-                strcpy(array[i].fullname,"");
+                array[i].sector=0;
+                array[i].salary=0;
+                strcpy(array[i].lastName,"");
+                strcpy(array[i].name,"");
             }
         }
         retorno=0;
@@ -175,7 +175,7 @@ int model_destroyMatchedInt(Model array[], int sizeArray, int valorBuscado)
     return retorno;
 }
 
-int model_modify(Model array[], int sizeArray)
+int employee_modify(Employee array[], int sizeArray)
 {
     int retorno=-1;
     int posicion;
@@ -185,7 +185,7 @@ int model_modify(Model array[], int sizeArray)
     if(array!=NULL && sizeArray>0)
     {
         utn_getUnsignedInt("\nID a modificar: ","\nError",1,sizeof(int),1,sizeArray,1,&id);
-        if(model_findId(array,sizeArray,id,&posicion)==-1)
+        if(employee_findId(array,sizeArray,id,&posicion)==-1)
         {
             printf("\nNo existe este ID");
         }
@@ -203,31 +203,31 @@ int model_modify(Model array[], int sizeArray)
                 		"\n D - Full Name: %s",
                        posicion,
 					   array[posicion].idUnico,
-					   array[posicion].age,
-					   array[posicion].payments,
-					   array[posicion].surname,
-					   array[posicion].fullname);
+					   array[posicion].sector,
+					   array[posicion].salary,
+					   array[posicion].lastName,
+					   array[posicion].name);
 
-                utn_getChar(MSG_MODIFY, MSG_ERROR_MODIFY,'A', 'Z', 3, &opcion);
+                utn_getChar(MSG_MODIFY_CHOOSE, MSG_ERROR_MODIFY_CHOOSE,'A', 'Z', 3, &opcion);
 
                 switch(opcion)
                 {
                     case 'A':
-                        utn_getUnsignedInt(MSG_MODIFY_AGE,MSG_ERROR_MODIFY_AGE,1,sizeof(int),1,sizeArray,1,&array[posicion].age);
+                        utn_getUnsignedInt(MSG_MODIFY_SECTOR,MSG_ERROR_MODIFY_SECTOR,1,sizeof(int),1,sizeArray,1,&array[posicion].sector);
                         break;
                     case 'B':
-                        utn_getFloat(MSG_MODIFY_PAYMENT,MSG_ERROR_MODIFY_PAYMENT,1,sizeof(float),0,1,1,&array[posicion].payments);
+                        utn_getFloat(MSG_MODIFY_SALARY,MSG_ERROR_MODIFY_SALARY,1,sizeof(float),0,1,1,&array[posicion].salary);
                         break;
                     case 'C':
-                        utn_getName(MSG_MODIFY_SURNAME,MSG_ERROR_MODIFY_SURNAME,1,TEXT_SIZE,1,array[posicion].surname);
+                        utn_getName(MSG_MODIFY_SURNAME,MSG_ERROR_MODIFY_SURNAME,1,TEXT_SIZE,1,array[posicion].lastName);
                         break;
                     case 'D':
-                        utn_getTexto(MSG_MODIFY_NAME,MSG_ERROR_MODIFY_NAME,1,TEXT_SIZE,1,array[posicion].fullname);
+                        utn_getTexto(MSG_MODIFY_NAME,MSG_ERROR_MODIFY_NAME,1,TEXT_SIZE,1,array[posicion].name);
                         break;
                     case 'S':
                         break;
                     default:
-                        printf("\nOpcion no valida");
+                        printf(MSG_DEFAULT_ERROR);
                 }
             }while(opcion!='S');
             retorno=0;
@@ -236,7 +236,7 @@ int model_modify(Model array[], int sizeArray)
     return retorno;
 }
 
-int model_sortByString(Model array[],int size)
+int employee_sortByString(Employee array[],int size)
 {
     int retorno=-1;
     int i, j;
@@ -251,42 +251,42 @@ int model_sortByString(Model array[],int size)
     {
         for (i = 1; i < size; i++)
         {
-            strcpy(bufferString,array[i].surname);
+            strcpy(bufferString,array[i].lastName);
             bufferId=array[i].idUnico;
             bufferIsEmpty=array[i].isEmpty;
 
-            bufferInt=array[i].age;
-            bufferFloat=array[i].payments;
-            strcpy(bufferLongString,array[i].fullname);
+            bufferInt=array[i].sector;
+            bufferFloat=array[i].salary;
+            strcpy(bufferLongString,array[i].name);
 
 
             j = i - 1;
-            while ((j >= 0) && strcmp(bufferString,array[j].surname)<0)
+            while ((j >= 0) && strcmp(bufferString,array[j].lastName)<0)
             {
-                strcpy(array[j + 1].surname,array[j].surname);
+                strcpy(array[j + 1].lastName,array[j].lastName);
                 array[j + 1].idUnico=array[j].idUnico;
                 array[j + 1].isEmpty=array[j].isEmpty;
 
-                array[j + 1].age=array[j].age;
-                array[j + 1].payments=array[j].payments;
-                strcpy(array[j + 1].fullname,array[j].fullname);
+                array[j + 1].sector=array[j].sector;
+                array[j + 1].salary=array[j].salary;
+                strcpy(array[j + 1].name,array[j].name);
 
                 j--;
             }
-            strcpy(array[j + 1].surname,bufferString);
+            strcpy(array[j + 1].lastName,bufferString);
             array[j + 1].idUnico=bufferId;
             array[j + 1].isEmpty=bufferIsEmpty;
 
-            array[j + 1].age=bufferInt;
-            array[j + 1].payments=bufferFloat;
-            strcpy(array[j + 1].fullname,bufferLongString);
+            array[j + 1].sector=bufferInt;
+            array[j + 1].salary=bufferFloat;
+            strcpy(array[j + 1].name,bufferLongString);
         }
         retorno=0;
     }
     return retorno;
 }
 
-int model_paginate(Model array[], int size)
+int employee_paginate(Employee array[], int size)
 {
     int retorno=-1;
     int i;
@@ -298,7 +298,7 @@ int model_paginate(Model array[], int size)
                 continue;
             else
                 printf("\n ID: %d\n varInt: %d\n varFloat: %f\n varString: %s\n varLongString: %s",
-                       array[i].idUnico,array[i].age,array[i].payments,array[i].surname,array[i].fullname);
+                       array[i].idUnico,array[i].sector,array[i].salary,array[i].lastName,array[i].name);
         }
         retorno=0;
     }
@@ -327,7 +327,7 @@ FUNCIONES DE INFORMES *
 * \return int Return (-1) si Error [Invalid length or NULL pointer] - (0) Ok
 *
 */
-int model_info_listarPorCriterio(Model arrayA[], Model arrayB[], int sizeI, int sizeJ, char* criterio)  //Valores de dos arrays. Si es valor repetido se vuelve a imprimir
+int employee_info_listarPorCriterio(Employee arrayA[], Employee arrayB[], int sizeI, int sizeJ, char* criterio)  //Valores de dos arrays. Si es valor repetido se vuelve a imprimir
 {
     int retorno=-1;
     int i;
@@ -338,9 +338,9 @@ int model_info_listarPorCriterio(Model arrayA[], Model arrayB[], int sizeI, int 
         {
             if(arrayA[i].isEmpty==1)                 //cambiar campo donde busco el criterio
                 continue;                                                                       //si esta vacio o no tiene el criterio > continue
-            if(strcmp(arrayA[i].surname,criterio)==0)
+            if(strcmp(arrayA[i].lastName,criterio)==0)
             {
-                model_findId(arrayB,sizeJ,arrayA[i].idUnico,&j);                            //Obtengo la posicion de la 2da entidad buscando por el campo en comun
+                employee_findId(arrayB,sizeJ,arrayA[i].idUnico,&j);                            //Obtengo la posicion de la 2da entidad buscando por el campo en comun
                 printf("\nID A: %d\nID B: %d",
                        arrayA[i].idUnico,arrayB[j].idUnico);
             }
@@ -360,7 +360,7 @@ int model_info_listarPorCriterio(Model arrayA[], Model arrayB[], int sizeI, int 
 *
 */
 //Lista un campo que se repite, lo imprime una sola vez y calcula contador y acumulado
-int model_info_listarCriterioContadorAcumulado(Model arrayA[], Model arrayB[], int sizeI, int sizeJ)         //cambiar Fantasma
+int employee_info_listarCriterioContadorAcumulado(Employee arrayA[], Employee arrayB[], int sizeI, int sizeJ)         //cambiar Fantasma
 {
     int retorno=-1;
     int i;
@@ -374,20 +374,20 @@ int model_info_listarCriterioContadorAcumulado(Model arrayA[], Model arrayB[], i
     {
         for(i=0;i<sizeI;i++)
         {
-            model_searchString(arrayA,i,arrayA[i].surname,&auxPosicion);                  //cambiar nombreFuncion y campo      va a analizar hasta <i
+            employee_searchString(arrayA,i,arrayA[i].lastName,&auxPosicion);                  //cambiar nombreFuncion y campo      va a analizar hasta <i
             if(arrayA[i].isEmpty==1 && auxPosicion!=-1)
                 continue;                                                                 //Si ese valor ya aparecio > continue
             else
             {
-                printf("\nCampo: %s",arrayA[i].surname);                                   //Imprimo el valor que voy a listar
+                printf("\nCampo: %s",arrayA[i].lastName);                                   //Imprimo el valor que voy a listar
                 for(k=i,contador=0,acumulado=0;k<sizeI;k++)                                                            //Recorro por segunda vez el mismo array
                 {
-                    if(arrayA[k].isEmpty!=1 && strcmp(arrayA[k].surname,arrayA[i].surname)==0)     //Busco todas las veces que aparece ese cuit
+                    if(arrayA[k].isEmpty!=1 && strcmp(arrayA[k].lastName,arrayA[i].lastName)==0)     //Busco todas las veces que aparece ese cuit
                     {
-                        model_findId(arrayB,sizeJ,arrayA[k].idUnico,&j);                 //cambiar Fantasma, busco por el campo en comun
+                        employee_findId(arrayB,sizeJ,arrayA[k].idUnico,&j);                 //cambiar Fantasma, busco por el campo en comun
 
                         contador++;
-                        acumulado+=(arrayA[k].age*arrayB[j].age);
+                        acumulado+=(arrayA[k].sector*arrayB[j].sector);
 
                         printf("\nID A: %d\nID B: %d",
                                 arrayA[k].idUnico,arrayB[j].idUnico);
@@ -411,7 +411,7 @@ int model_info_listarCriterioContadorAcumulado(Model arrayA[], Model arrayB[], i
 * \return int Return (-1) si Error [Invalid length or NULL pointer] - (0) Ok
 *
 */
-int model_info_maxContadorAcumulado(Model arrayA[], Model arrayB[], int sizeI, int sizeJ)
+int employee_info_maxContadorAcumulado(Employee arrayA[], Employee arrayB[], int sizeI, int sizeJ)
 {
     int retorno=-1;
     int i;
@@ -429,21 +429,21 @@ int model_info_maxContadorAcumulado(Model arrayA[], Model arrayB[], int sizeI, i
     {
         for(i=0;i<sizeI;i++)
         {
-            model_searchString(arrayA,i,arrayA[i].surname,&auxPosicion);                  //cambiar nombreFuncion y campo
+            employee_searchString(arrayA,i,arrayA[i].lastName,&auxPosicion);                  //cambiar nombreFuncion y campo
             if(arrayA[i].isEmpty==1 && auxPosicion!=-1)
                 continue;                                                                 //Si ese valor ya aparecio > continue
             else
             {
-                printf("\nCampo: %s",arrayA[i].surname);                                   //Imprimo el valor que voy a listar
+                printf("\nCampo: %s",arrayA[i].lastName);                                   //Imprimo el valor que voy a listar
                 for(k=i;k<sizeI;k++)                                                            //Recorro por segunda vez el mismo array
                 {
-                    if(arrayA[k].isEmpty!=1 && strcmp(arrayA[k].surname,arrayA[i].surname)==0)     //Busco todas las veces que aparece ese cuit
+                    if(arrayA[k].isEmpty!=1 && strcmp(arrayA[k].lastName,arrayA[i].lastName)==0)     //Busco todas las veces que aparece ese cuit
                     {
 
-                        model_findId(arrayB,sizeJ,arrayA[k].idUnico,&j);                 //cambiar Fantasma, busco por el campo en comun
+                        employee_findId(arrayB,sizeJ,arrayA[k].idUnico,&j);                 //cambiar Fantasma, busco por el campo en comun
 
                         contador++;                                                         //calculos acumulados y contador
-                        acumulador+=(arrayA[k].age*arrayB[j].age);
+                        acumulador+=(arrayA[k].sector*arrayB[j].sector);
 
                         printf("\nID A: %d\nID B: %d",                                         //imprimo datos que haya que mostrar
                                 arrayA[k].idUnico,arrayB[j].idUnico);
@@ -483,14 +483,14 @@ int model_info_maxContadorAcumulado(Model arrayA[], Model arrayB[], int sizeI, i
         {
             if(iMaxAcumulado[i]!=-2)                         //Salteo los vacios
             {
-                printf("\n          CUIT: %s",arrayA[iMaxAcumulado[i]].surname);
+                printf("\n          CUIT: %s",arrayA[iMaxAcumulado[i]].lastName);
             }
         }
         for(;iMaxContador[i]!=-1;i--)
         {
             if(iMaxContador[i]!=-2)                         //Salteo los vacios
             {
-                printf("\n          CUIT: %s",arrayA[iMaxContador[i]].surname);
+                printf("\n          CUIT: %s",arrayA[iMaxContador[i]].lastName);
             }
         }
 
@@ -507,7 +507,7 @@ int model_info_maxContadorAcumulado(Model arrayA[], Model arrayB[], int sizeI, i
 * \return int Return (-1) si Error [Invalid length or NULL pointer] - (0) Ok
 *
 */
-int Informes_listarAuxiliarOrdenar(Model arrayA[], Model arrayB[], int sizeI, int sizeJ)         //cambiar Fantasma
+int Informes_listarAuxiliarOrdenar(Employee arrayA[], Employee arrayB[], int sizeI, int sizeJ)         //cambiar Fantasma
 {
     int retorno=-1;
     int i;
@@ -517,31 +517,31 @@ int Informes_listarAuxiliarOrdenar(Model arrayA[], Model arrayB[], int sizeI, in
     int contador=0;
     int acumulado=0;
 
-    Model arrayAux[sizeI];                                                           //cambiar Fantasma y size si corresponde
+    Employee arrayAux[sizeI];                                                           //cambiar Fantasma y size si corresponde
 
     if(arrayA!=NULL && sizeI>=0 && arrayB!=NULL && sizeJ>=0)
     {
         for(i=0;i<sizeI;i++)
         {
-            model_searchString(arrayA,i,arrayA[i].surname,&auxPosicion);                  //cambiar nombreFuncion y campo      va a analizar hasta <i
+            employee_searchString(arrayA,i,arrayA[i].lastName,&auxPosicion);                  //cambiar nombreFuncion y campo      va a analizar hasta <i
             if(arrayA[i].isEmpty==1 && auxPosicion!=-1)
                 continue;                                                                 //Si ese valor ya aparecio > continue
             else
             {
-                strcpy(arrayAux[i].surname,arrayA[i].surname);                              //cambio varstring
+                strcpy(arrayAux[i].lastName,arrayA[i].lastName);                              //cambio varstring
                 for(k=i;k<sizeI;k++)                                                            //Recorro por segunda vez el mismo array
                 {
-                    if(arrayA[k].isEmpty!=1 && strcmp(arrayA[k].surname,arrayA[i].surname)==0)     //Busco todas las veces que aparece ese cuit
+                    if(arrayA[k].isEmpty!=1 && strcmp(arrayA[k].lastName,arrayA[i].lastName)==0)     //Busco todas las veces que aparece ese cuit
                     {
-                        model_findId(arrayB,sizeJ,arrayA[k].idUnico,&j);                 //cambiar Fantasma, busco por el campo en comun
+                        employee_findId(arrayB,sizeJ,arrayA[k].idUnico,&j);                 //cambiar Fantasma, busco por el campo en comun
 
                         contador++;
-                        acumulado+=(arrayA[k].age*arrayB[j].age);
+                        acumulado+=(arrayA[k].sector*arrayB[j].sector);
 
                     }
                 }
-                arrayAux[i].age=contador;                                    //completo el resto de los campos
-                arrayAux[i].age=acumulado;
+                arrayAux[i].sector=contador;                                    //completo el resto de los campos
+                arrayAux[i].sector=acumulado;
                 arrayAux[i].isEmpty=0;
 
                 contador=0;

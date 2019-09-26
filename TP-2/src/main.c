@@ -1,7 +1,7 @@
 /*
  ============================================================================
- Name        : usr sys
- Author      : juan cruz tommasi
+ Name        : TRABAJO PRACTICO N-2
+ Author      : Juan Cruz Tommasi
  Version     : 1.0 beta
  ============================================================================
  */
@@ -14,8 +14,8 @@ int main(void)
 	int opNumber;
 	int id_autoinc = 0;
 
-	Model arrayModel[QTY_TIPO];
-	model_clear_all(arrayModel,QTY_TIPO);
+	Employee arrayEmployee[QTY_TIPO];
+	employee_clear_all(arrayEmployee,QTY_TIPO);
 
 	do
 	{
@@ -25,24 +25,24 @@ int main(void)
 		switch (opNumber)
 		{
 			case 1:
-				model_signup(arrayModel, QTY_TIPO, &id_autoinc);
+				employee_signup(arrayEmployee, QTY_TIPO, &id_autoinc);
 				break;
 			case 2:
-				model_destroy(arrayModel, QTY_TIPO);
+				employee_destroy(arrayEmployee, QTY_TIPO);
 				break;
 			case 3:
-				model_modify(arrayModel, QTY_TIPO);
+				employee_modify(arrayEmployee, QTY_TIPO);
 				break;
 			case 4:
-				model_paginate(arrayModel, QTY_TIPO);
+				employee_paginate(arrayEmployee, QTY_TIPO);
 				break;
 			case 5:
-				model_sortByString(arrayModel,QTY_TIPO);
+				employee_sortByString(arrayEmployee,QTY_TIPO);
 				break;
 			case 6:
 				break;
 			default:
-				printf("Esa opcion no es valida..");
+				printf(MSG_ERROR);
 				break;
 		}
 	}	while (opNumber != 6);
