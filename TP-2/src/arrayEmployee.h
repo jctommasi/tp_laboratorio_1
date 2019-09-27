@@ -6,7 +6,7 @@
 #define MSG_DEFAULT_ERROR "\nError, opcion no valida..\n"
 
 #define MSG_ERROR_MODIFY_CHOOSE  "\nError al elegir"
-#define MSG_MODIFY_CHOOSE "\nModificar: A B C D - S(salir)"
+#define MSG_MODIFY_CHOOSE "\n\t\t\t\t\t(choose: A B C D # S = Salir)\n\n\t\t\t\t\tQue dato desea modificar?:"
 
 #define MSG_ERROR_MODIFY_SECTOR  "\nError al modificar la edad"
 #define MSG_MODIFY_SECTOR  "\nIngrese la edad, por favor:"
@@ -24,6 +24,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "utn.h"
+#include "stuff.h"
 
 typedef struct
 {
@@ -31,7 +32,6 @@ typedef struct
     int isEmpty;
     int sector;
     float salary;
-    char genre; // 1 CHAR TYPE
     char lastName[TEXT_SIZE]; // STRING TYPE
     char name[TEXT_SIZE]; // LONG STRING TYPE
 

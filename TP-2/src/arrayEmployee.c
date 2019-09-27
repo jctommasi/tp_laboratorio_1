@@ -111,12 +111,29 @@ int employee_signup(Employee array[], int size, int* contadorID)
             (*contadorID)++;
             array[posicion].idUnico=*contadorID;
             array[posicion].isEmpty=0;
-            utn_getUnsignedInt("\nSector: ",MSG_DEFAULT_ERROR,1,sizeof(int),1,size,1,&array[posicion].sector);
-            utn_getName("\nApellido: ",MSG_DEFAULT_ERROR,1,TEXT_SIZE,1,array[posicion].lastName);
-            utn_getTexto("\nNombre: ",MSG_DEFAULT_ERROR,1,TEXT_SIZE,1,array[posicion].name);
-            utn_getFloat("\nSalario: ",MSG_DEFAULT_ERROR,1,sizeof(float),0,1,1,&array[posicion].salary);
-            printf("\n Posicion: %d\n ID: %d\n Apellido: %s\n Nombre Completo: %s\n Edad: %d",
-                   posicion, array[posicion].idUnico,array[posicion].lastName,array[posicion].name,array[posicion].sector);
+            utn_getUnsignedInt("\n\n\n\t\t\t\t\t\tSector: ",MSG_DEFAULT_ERROR,1,sizeof(int),1,size,1,&array[posicion].sector);
+            utn_getName("\t\t\t\t\t\tApellido: ",MSG_DEFAULT_ERROR,1,TEXT_SIZE,1,array[posicion].lastName);
+            utn_getTexto("\t\t\t\t\t\tNombre: ",MSG_DEFAULT_ERROR,1,TEXT_SIZE,1,array[posicion].name);
+            utn_getFloat("\t\t\t\t\t\tSalario: ",MSG_DEFAULT_ERROR,1,sizeof(float),0,1,1,&array[posicion].salary);
+            stuff_clearScreen();
+            stuff_showSignUpBanner();
+            printf(	"\n\n\n\t\t\t\t\t\t######################"
+            		"\n\t\t\t\t\t\tALTA SATISFACTORIA"
+            		"\n\t\t\t\t\t\t######################"
+            		"\n\t\t\t\t\t\tPosicion: %d"
+            		"\n\t\t\t\t\t\tID: %d"
+            		"\n\t\t\t\t\t\tApellido: %s"
+            		"\n\t\t\t\t\t\tNombre: %s"
+            		"\n\t\t\t\t\t\tSector: %d"
+            		"\n\t\t\t\t\t\tSalario: %f"
+            		"\n\t\t\t\t\t\t######################\n",
+                   posicion,
+				   array[posicion].idUnico,
+				   array[posicion].lastName,
+				   array[posicion].name,
+				   array[posicion].sector,
+				   array[posicion].salary);
+            stuff_sleep(3);
             retorno=0;
         }
     }
@@ -131,14 +148,28 @@ int employee_destroy(Employee array[], int sizeArray)
 
     if(array!=NULL && sizeArray>0)
     {
-        utn_getUnsignedInt("\nID a cancelar: ","\nError",1,sizeof(int),1,sizeArray,1,&id);
+        utn_getUnsignedInt("\n\n\n\t\t\t\t\t\tID a cancelar: ","\nError",1,sizeof(int),1,sizeArray,1,&id);
 
         if(employee_findId(array,sizeArray,id,&posicion)==-1)
         {
-            printf("\nNo existe este ID");
+            printf("\n\n\n"
+            		"\t\t\t\t\t\t##############\n"
+            		"\t\t\t\t\t\tID INEXISTENTE\n"
+            		"\t\t\t\t\t\t##############\n"
+            		"\n\n\t\t\t\t\tvolviendo al menu principal ..\n");
+            stuff_sleep(2);
         }
         else
         {
+        	//antes del borrado, copio los datos para luego mostrar que es lo que se borro
+        	Employee arrayAux[sizeArray];
+        	arrayAux[posicion].idUnico = array[posicion].idUnico;
+        	arrayAux[posicion].sector = array[posicion].sector;
+        	arrayAux[posicion].salary = array[posicion].salary;
+        	strcpy(arrayAux[posicion].lastName,array[posicion].lastName);
+        	strcpy(arrayAux[posicion].name,array[posicion].name);
+
+        	//inicio borrado
             array[posicion].isEmpty=1;
             array[posicion].idUnico=0;
             array[posicion].sector=0;
@@ -146,7 +177,27 @@ int employee_destroy(Employee array[], int sizeArray)
             strcpy(array[posicion].lastName,"");
             strcpy(array[posicion].name,"");
             retorno=0;
-            printf("\nEl usuario ha sido eliminado exitosamente.\n");
+
+            //informe de borrado
+            stuff_clearScreen();
+            stuff_employeeGoneAway();
+            printf(	"\n\n\n\t\t\t\t\t\t######################"
+            		"\n\t\t\t\t\t\tBORRADO SATISFACTORIO"
+            		"\n\t\t\t\t\t\t######################"
+            		"\n\t\t\t\t\t\tPosicion: %d"
+            		"\n\t\t\t\t\t\tID: %d"
+            		"\n\t\t\t\t\t\tApellido: %s"
+            		"\n\t\t\t\t\t\tNombre: %s"
+            		"\n\t\t\t\t\t\tSector: %d"
+            		"\n\t\t\t\t\t\tSalario: %f"
+            		"\n\t\t\t\t\t\t######################\n",
+                   posicion,
+				   arrayAux[posicion].idUnico,
+				   arrayAux[posicion].lastName,
+				   arrayAux[posicion].name,
+				   arrayAux[posicion].sector,
+				   arrayAux[posicion].salary);
+            stuff_sleep(6);
         }
     }
     return retorno;
@@ -184,23 +235,36 @@ int employee_modify(Employee array[], int sizeArray)
     char opcion;
     if(array!=NULL && sizeArray>0)
     {
-        utn_getUnsignedInt("\nID a modificar: ","\nError",1,sizeof(int),1,sizeArray,1,&id);
+        utn_getUnsignedInt("\n\t\t\t\t\t Ingrese el ID a modificar: ","\nError",1,sizeof(int),1,sizeArray,1,&id);
         if(employee_findId(array,sizeArray,id,&posicion)==-1)
         {
-            printf("\nNo existe este ID");
+            printf("\n\n\n"
+            		"\033[0;31m"
+            		"\t\t\t\t\t\t##############\n"
+            		"\t\t\t\t\t\tID INEXISTENTE\n"
+            		"\t\t\t\t\t\t##############\n"
+            		"\n\n\t\t\t\t\tvolviendo al menu principal ..\n"
+            		"\033[0m");
+            stuff_sleep(2);
         }
         else
         {
             do
             {
-                printf( "\n=================="
-                		"\n Posicion: %d"
-                		"\n ID: %d"
-                		"\n=================="
-                		"\n A - Age: %d"
-                		"\n B - Payments: %f"
-                		"\n C - Surname: %s"
-                		"\n D - Full Name: %s",
+            	stuff_clearScreen();
+            	stuff_showModifyBanner();
+
+                printf( "\n\t\t\t\t\tSE HA ENCONTRADO EL EMPLEADO:"
+                		"\033[0;31m"
+                		"\n\n\t\t\t\t\t\t=================="
+                		"\n\t\t\t\t\t\tPosicion: %d"
+                		"\n\t\t\t\t\t\tID: %d"
+                		"\n\t\t\t\t\t\t=================="
+                		"\n\t\t\t\t\t\tA - Sector: %d"
+                		"\n\t\t\t\t\t\tB - Salario: %f"
+                		"\n\t\t\t\t\t\tC - Apellido: %s"
+                		"\n\t\t\t\t\t\tD - Nombre: %s\n"
+                		"\033[0m",
                        posicion,
 					   array[posicion].idUnico,
 					   array[posicion].sector,
@@ -292,15 +356,24 @@ int employee_paginate(Employee array[], int size)
     int i;
     if(array!=NULL && size>=0)
     {
+    	printf(	"#########################################################################################################################\n"
+    			"|\tID\t|\tSECTOR\t|\t\tSALARIO\t\t\t|\tAPELLIDO\t|\tNOMBRE\t\t|\n"
+    			"#########################################################################################################################\n");
         for(i=0;i<size;i++)
         {
             if(array[i].isEmpty==1)
                 continue;
             else
-                printf("\n ID: %d\n varInt: %d\n varFloat: %f\n varString: %s\n varLongString: %s",
-                       array[i].idUnico,array[i].sector,array[i].salary,array[i].lastName,array[i].name);
+            	printf("|\t%d\t|\t%d\t|\t\t%f\t\t|\t%s\t\t|\t%s\t\t|\n",
+                       array[i].idUnico,
+					   array[i].sector,
+					   array[i].salary,
+					   array[i].lastName,
+					   array[i].name);
+
         }
         retorno=0;
+        stuff_sleep(5);
     }
     return retorno;
 }
