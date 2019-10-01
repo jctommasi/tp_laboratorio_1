@@ -37,7 +37,6 @@ typedef struct
 
 }Employee;
 
-
 #endif
 
 int employee_clear_all(Employee array[], int size);

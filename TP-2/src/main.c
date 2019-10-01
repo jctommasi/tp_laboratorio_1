@@ -14,10 +14,10 @@ int main(void)
 	int opNumber;
 	int id_autoinc = 0;
 
-	//Employee arrayEmployee[QTY_TIPO];
-	//employee_clear_all(arrayEmployee,QTY_TIPO);
+	Employee arrayEmployee[DB_LENGHT];
+	employee_clear_all(arrayEmployee,DB_LENGHT);
 
-	Employee arrayEmployee[DB_LENGHT]=
+	/*Employee arrayEmployee[DB_LENGHT]=
 	{
 		{ 0, 0, 44, 456.000, "Gabriel", "Peter"},
 		{ 1, 0, 51, 36.000, "Bond", "James"},
@@ -25,7 +25,7 @@ int main(void)
 		{ 3, 0, 13, 405.000, "Patton", "Mike"},
 		{ 4, 0, 420, 5.000, "Marley", "Bob"},
 		{5, 0, 1, 4445.000, "Presley", "Elvis"},
-	};
+	};*/
 
 	do
 	{
