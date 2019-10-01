@@ -40,6 +40,7 @@ typedef struct
 #endif
 
 int employee_clear_all(Employee array[], int size);
+int employee_checkIfDbHasEntries(Employee array[], int size);
 int employee_findEmpty(Employee array[], int size, int* posicion);
 int employee_findId(Employee array[], int size, int valorBuscado, int* posicion);
 int employee_searchInt(Employee array[], int size, int valorBuscado, int* posicion);
@@ -50,3 +51,4 @@ int employee_destroyMatchedInt(Employee array[], int sizeArray, int valorBuscado
 int employee_modify(Employee array[], int sizeArray);
 int employee_sortByString(Employee array[],int size);
 int employee_paginate(Employee array[], int size);
+int employee_info_getSalaryMedia(Employee array[], int size);

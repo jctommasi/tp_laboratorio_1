@@ -14,6 +14,24 @@ int employee_clear_all(Employee array[], int size)
     return retorno;
 }
 
+int employee_checkIfDbHasEntries(Employee array[], int size)
+{
+	int retorno=-1;
+	int i;
+	if(array!= NULL && size>=0)
+	{
+		for(i=0;i<size;i++)
+		{
+			if(array[i].isEmpty==0)
+			{
+				retorno=0;
+				break;
+			}
+		}
+	}
+	return retorno;
+}
+
 int employee_findEmpty(Employee array[], int size, int* posicion)
 {
     int retorno=-1;
@@ -407,6 +425,42 @@ int employee_paginate(Employee array[], int size)
         }
         retorno=0;
         stuff_sleep(5);
+    }
+    return retorno;
+}
+
+int employee_info_getSalaryMedia(Employee arrayEmployee[], int size)
+{
+	int i;
+
+	int employeesUpperMediaSalary = 0;
+	float salaryProm = 0;
+    int retorno = -1;
+    float salaryAcum = 0;
+    int contSalary = 0;
+
+    if(arrayEmployee!= NULL && size>=0)
+    {
+        for(i=0;i<size;i++)
+        {
+            if(arrayEmployee[i].isEmpty==0)
+            {
+            	salaryAcum = salaryAcum + arrayEmployee[i].salary;
+            	contSalary++;
+            }
+        }
+
+        salaryProm = salaryAcum / contSalary;
+
+        for(i=0;i<size;i++)
+        {
+        	if(arrayEmployee[i].salary > salaryProm)
+        	{
+        		employeesUpperMediaSalary++;
+        	}
+        }
+        printf("\n\t\tEl salario promedio es de: %f con un total de %i empleados que superan la media", salaryProm, employeesUpperMediaSalary);
+        retorno = 0;
     }
     return retorno;
 }
