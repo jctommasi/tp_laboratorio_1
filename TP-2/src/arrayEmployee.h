@@ -51,7 +51,3 @@ int employee_destroyMatchedInt(Employee array[], int sizeArray, int valorBuscado
 int employee_modify(Employee array[], int sizeArray);
 int employee_sortByString(Employee array[],int size);
 int employee_paginate(Employee array[], int size);
-
-int employee_info_listarPorCriterio(Employee arrayA[], Employee arrayB[], int sizeI, int sizeJ, char* criterio);
-int employee_info_listarCriterioContadorAcumulado(Employee arrayA[], Employee arrayB[], int sizeI, int sizeJ);
-int employee_info_maxContadorAcumulado(Employee arrayA[], Employee arrayB[], int sizeI, int sizeJ);
