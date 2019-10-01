@@ -17,7 +17,7 @@ int main(void)
 	//Employee arrayEmployee[QTY_TIPO];
 	//employee_clear_all(arrayEmployee,QTY_TIPO);
 
-	Employee arrayEmployee[QTY_TIPO]=
+	Employee arrayEmployee[DB_LENGHT]=
 	{
 		{ 0, 0, 44, 456.000, "Gabriel", "Peter"},
 		{ 1, 0, 51, 36.000, "Bond", "James"},
@@ -37,25 +37,25 @@ int main(void)
 			case 1:
 				stuff_clearScreen();
 				stuff_showSignUpBanner();
-				employee_signup(arrayEmployee, QTY_TIPO, &id_autoinc);
+				employee_signup(arrayEmployee, DB_LENGHT, &id_autoinc);
 				break;
 			case 2:
 				stuff_clearScreen();
 				stuff_showDestroyBanner();
-				employee_destroy(arrayEmployee, QTY_TIPO);
+				employee_destroy(arrayEmployee, DB_LENGHT);
 				break;
 			case 3:
 				stuff_clearScreen();
 				stuff_showModifyBanner();
-				employee_modify(arrayEmployee, QTY_TIPO);
+				employee_modify(arrayEmployee, DB_LENGHT);
 				break;
 			case 4:
 				stuff_clearScreen();
 				stuff_showPaginateBanner();
-				employee_paginate(arrayEmployee, QTY_TIPO);
+				employee_paginate(arrayEmployee, DB_LENGHT);
 				break;
 			case 5:
-				employee_sortByString(arrayEmployee,QTY_TIPO);
+				employee_sortByString(arrayEmployee,DB_LENGHT);
 				break;
 			case 6:
 				break;

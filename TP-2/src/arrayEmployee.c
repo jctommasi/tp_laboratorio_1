@@ -304,28 +304,29 @@ int employee_sortByString(Employee array[],int size)
 {
     int retorno=-1;
     int i, j;
-    char bufferString[TEXT_SIZE];
-    int bufferId;
-    int bufferIsEmpty;
 
-    int bufferInt;
-    float bufferFloat;
-    char bufferLongString[TEXT_SIZE];
+    char lastnameAux[TEXT_SIZE];
+    int idAux;
+    int isemptyAux;
+    int sectorAux;
+    float salaryAux;
+    char nameAux[TEXT_SIZE];
+
     if(array!=NULL && size>=0)
     {
         for (i = 1; i < size; i++)
         {
-            strcpy(bufferString,array[i].lastName);
-            bufferId=array[i].idUnico;
-            bufferIsEmpty=array[i].isEmpty;
+            strcpy(lastnameAux,array[i].lastName);
+            idAux=array[i].idUnico;
+            isemptyAux=array[i].isEmpty;
 
-            bufferInt=array[i].sector;
-            bufferFloat=array[i].salary;
-            strcpy(bufferLongString,array[i].name);
+            sectorAux=array[i].sector;
+            salaryAux=array[i].salary;
+            strcpy(nameAux,array[i].name);
 
 
             j = i - 1;
-            while ((j >= 0) && strcmp(bufferString,array[j].lastName)<0)
+            while ((j >= 0) && strcmp(lastnameAux,array[j].lastName)<0)
             {
                 strcpy(array[j + 1].lastName,array[j].lastName);
                 array[j + 1].idUnico=array[j].idUnico;
@@ -337,13 +338,46 @@ int employee_sortByString(Employee array[],int size)
 
                 j--;
             }
-            strcpy(array[j + 1].lastName,bufferString);
-            array[j + 1].idUnico=bufferId;
-            array[j + 1].isEmpty=bufferIsEmpty;
+            strcpy(array[j + 1].lastName,lastnameAux);
+            array[j + 1].idUnico=idAux;
+            array[j + 1].isEmpty=isemptyAux;
 
-            array[j + 1].sector=bufferInt;
-            array[j + 1].salary=bufferFloat;
-            strcpy(array[j + 1].name,bufferLongString);
+            array[j + 1].sector=sectorAux;
+            array[j + 1].salary=salaryAux;
+            strcpy(array[j + 1].name,nameAux);
+        }
+
+        for (i = 1; i < size; i++)
+        {
+            strcpy(lastnameAux,array[i].lastName);
+            idAux=array[i].idUnico;
+            isemptyAux=array[i].isEmpty;
+
+            sectorAux=array[i].sector;
+            salaryAux=array[i].salary;
+            strcpy(nameAux,array[i].name);
+
+
+            j = i - 1;
+            while ((j >= 0) && sectorAux < array[j].sector)
+            {
+                strcpy(array[j + 1].lastName,array[j].lastName);
+                array[j + 1].idUnico=array[j].idUnico;
+                array[j + 1].isEmpty=array[j].isEmpty;
+
+                array[j + 1].sector=array[j].sector;
+                array[j + 1].salary=array[j].salary;
+                strcpy(array[j + 1].name,array[j].name);
+
+                j--;
+            }
+            strcpy(array[j + 1].lastName,lastnameAux);
+            array[j + 1].idUnico=idAux;
+            array[j + 1].isEmpty=isemptyAux;
+
+            array[j + 1].sector=sectorAux;
+            array[j + 1].salary=salaryAux;
+            strcpy(array[j + 1].name,nameAux);
         }
         retorno=0;
     }
@@ -370,7 +404,6 @@ int employee_paginate(Employee array[], int size)
 					   array[i].salary,
 					   array[i].lastName,
 					   array[i].name);
-
         }
         retorno=0;
         stuff_sleep(5);
