@@ -3,8 +3,19 @@
  Name        : TRABAJO PRACTICO N-2
  Author      : Juan Cruz Tommasi
  Version     : 1.0 beta
+   _   _   _   _   _   _
+  / \ / \ / \ / \ / \ / \
+ ( R | E | A | D | M | E )
+  \_/ \_/ \_/ \_/ \_/ \_/
+
+ VERSION COMPILADA DISPONIBLE EN LA RAIZ DEL REPOSITORIO
+ ./tp2_compiled.o
+
+ COMPILED VERSION AVAILABLE IN ROOT REPOSITORY DIRECTORY
+ ./tp2_compiled.o
  ============================================================================
  */
+
 
 #include "global.h"
 
