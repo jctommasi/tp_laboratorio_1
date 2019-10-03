@@ -344,7 +344,7 @@ int employee_sortByString(Employee array[],int size)
 
 
             j = i - 1;
-            while ((j >= 0) && strcmp(lastnameAux,array[j].lastName)<0)
+            while ((j >= 0) && sectorAux < array[j].sector)
             {
                 strcpy(array[j + 1].lastName,array[j].lastName);
                 array[j + 1].idUnico=array[j].idUnico;
@@ -377,7 +377,7 @@ int employee_sortByString(Employee array[],int size)
 
 
             j = i - 1;
-            while ((j >= 0) && sectorAux < array[j].sector)
+            while ((j >= 0) && strcmp(lastnameAux,array[j].lastName)<0)
             {
                 strcpy(array[j + 1].lastName,array[j].lastName);
                 array[j + 1].idUnico=array[j].idUnico;
@@ -459,7 +459,7 @@ int employee_info_getSalaryMedia(Employee arrayEmployee[], int size)
         		employeesUpperMediaSalary++;
         	}
         }
-        printf("\n\t\tEl salario promedio es de: %f con un total de %i empleados que superan la media", salaryProm, employeesUpperMediaSalary);
+        printf("\n\t\tEl salario promedio es de: %f con un total de %i empleados que superan la media\n\t\tEl total de sueldos a pagar es de: %f", salaryProm, employeesUpperMediaSalary, salaryAcum);
         retorno = 0;
     }
     return retorno;
